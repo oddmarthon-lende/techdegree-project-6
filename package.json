@@ -1,0 +1,24 @@
+{
+  "name": "techdegree-project-6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/oddmarthon-lende/techdegree-project-6.git"
+  },
+  "author": "Odd Marthon Lende",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oddmarthon-lende/techdegree-project-6/issues"
+  },
+  "homepage": "https://github.com/oddmarthon-lende/techdegree-project-6#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "csv": "^3.1.0",
+    "request": "^2.88.0"
+  }
+}
