@@ -6,11 +6,16 @@ const fs      = require('fs');
 const dataDir = './data';
 const baseUrl = 'http://shirts4mike.com/';
 
+
+function checkResponse(response) {
+  if(!error && response.statusCode !== 200)
+    return new Error(`There’s been a ${response.statusCode} error. Cannot connect to ${baseUrl}`);
+}
+
 function getProduct(link) {
   return new Promise((resolve, reject) => {
     request(`${baseUrl}${link}`, (error, response, body) => {
-      if(!error && response.statusCode !== 200)
-        error = new Error(`There’s been a ${response.statusCode} error. Cannot connect to ${baseUrl}`);
+      error = error || checkResponse(response);
       if(error) return reject(error);
       const $ = cheerio.load(body);
       resolve({
@@ -27,8 +32,7 @@ function getProduct(link) {
 function getProductLinks() {
   return new Promise((resolve, reject) => {
     request(`${baseUrl}shirts.php`, (error, response, body) => {
-      if(!error && response.statusCode !== 200)
-        error = new Error(`There’s been a ${response.statusCode} error. Cannot connect to ${baseUrl}`);
+      error = error || checkResponse(response);
       if(error) return reject(error);
       const $ = cheerio.load(body);
       const links = [];
