@@ -76,8 +76,20 @@ function writeToCSVFile(products) {
 }
 
 // Writes to the error file
-function writeToErrorFile(error) {
-  fs.appendFile('./scraper-error.log', `[${new Date()}] ${error.message}\n`, 'utf8', (error) => error && console.error(error.message));
+function errorHandler(error) {
+
+  let message = '';
+
+  switch(error.code) {
+    case 'ENOTFOUND':
+      message = `Cannot connect to ${baseUrl} : ${error.message}`;
+      break;
+    default:
+      message = error.message;
+  }
+
+  console.error(message);
+  fs.appendFile('./scraper-error.log', `[${new Date()}] ${message}\n`, 'utf8', (error) => error && console.error(error.message));
 }
 
 // Runs the functions above
@@ -87,4 +99,4 @@ getProductLinks()
   Promise.all(links.map((link) => getProduct(link)))
   .then(writeToCSVFile);
 }))
-.catch(writeToErrorFile);
+.catch(errorHandler);
